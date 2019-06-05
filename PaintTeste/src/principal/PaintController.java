@@ -1,4 +1,4 @@
-package application;
+package principal;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
@@ -13,7 +13,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Font;
+
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 
 import desenho.Circulo;
 import desenho.Formas;
+import desenho.Linha;
 import desenho.Quadrado;
 import desenho.Texto;
 
@@ -74,43 +75,56 @@ public class PaintController {
 
     @FXML
     private void setPencilButtonAsActive() {
+        if (this.activeButton != null) this.activeButton.setStyle(null);
         this.activeButton = this.pencil;
+        this.pencil.setStyle("-fx-background-color: green;");
     }
 
     @FXML
     private void setLineButtonAsActive() {
+        if (this.activeButton != null) this.activeButton.setStyle(null);
         this.activeButton = this.line;
+        this.line.setStyle("-fx-background-color: green;");
     }
 
     @FXML
     private void setCircleButtonAsActive() {
+        if (this.activeButton != null) this.activeButton.setStyle(null);
         this.activeButton = this.circle;
+        this.circle.setStyle("-fx-background-color: green;");
     }
 
     @FXML
     private void setRectangleButtonAsActive() {
+        if (this.activeButton != null) this.activeButton.setStyle(null);
         this.activeButton = this.rectangle;
+        this.rectangle.setStyle("-fx-background-color: green;");
     }
 
     @FXML
     private void setTextButtonAsActive() {
+        if (this.activeButton != null) this.activeButton.setStyle(null);
         this.activeButton = this.text;
+        this.text.setStyle("-fx-background-color: green;");
     }
 
     @FXML
     private void setEraserButtonAsActive() {
+        if (this.activeButton != null) this.activeButton.setStyle(null);
         this.activeButton = this.eraser;
+        this.eraser.setStyle("-fx-background-color: green;");
+    }
+    
+    @FXML
+    private void unDo() {
+
     }
 
     @FXML
-    private void setUndoButtonAsActive() {
-        this.activeButton = this.undo;
+    private void reDo() {
+
     }
 
-    @FXML
-    private void setRedoButtonAsActive() {
-        this.activeButton = this.redo;
-    }
 
 
 
@@ -159,9 +173,9 @@ public class PaintController {
 
     public void initialize() {
 
-        Formas quad = new Quadrado();
-        Formas circ = new Circulo();
-        
+        Formas quadrado = new Quadrado();
+        Formas circulo = new Circulo();
+        Linha linha = new Linha();
         Texto texto = new Texto();
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -180,27 +194,29 @@ public class PaintController {
 
         canvas.setOnMousePressed(e -> {
             if (this.activeButton == rectangle) {
-            	quad.ponto1(gc, colorPicker, e.getX(), e.getY());
+            	quadrado.ponto1(gc, colorPicker, e.getX(), e.getY());
 
             } else if (this.activeButton == circle) {
-            	circ.ponto1(gc, colorPicker, e.getX(), e.getY());
+            	circulo.ponto1(gc, colorPicker, e.getX(), e.getY());
 
             } else if (this.activeButton == text) {
             	texto.escrever(gc, lineThickness, textField, colorPicker, e.getX(), e.getY());
-                gc.setFont(Font.font(lineThickness.getValue()));
-                gc.setStroke(colorPicker.getValue());
-                gc.setFill(colorPicker.getValue());
-                gc.fillText(textField.getText(), e.getX(), e.getY());
-                gc.strokeText(textField.getText(), e.getX(), e.getY());
+
+            } else if (this.activeButton == line) {
+            	linha.ponto1(gc, colorPicker, e.getX(), e.getY());
+            	
             }
         });
 
         canvas.setOnMouseReleased(e -> {
             if (this.activeButton == rectangle) {
-            	quad.ponto2(e.getX(), e.getY(), gc);
+            	quadrado.ponto2(e.getX(), e.getY(), gc);
 
             } else if (this.activeButton == circle) {
-               	circ.ponto2(e.getX(), e.getY(), gc);
+               	circulo.ponto2(e.getX(), e.getY(), gc);
+            } else if (this.activeButton == line) {
+            	linha.ponto2(e.getX(), e.getY(), gc);
+            	
             }
         });
     }

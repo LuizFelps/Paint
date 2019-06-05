@@ -6,31 +6,28 @@ import javafx.scene.shape.Rectangle;
 
 public class Quadrado extends Desenhar implements Formas {
 	
-	Rectangle rect = new Rectangle();
+	Rectangle quadrado = new Rectangle();
 	
 	public void ponto1(GraphicsContext gc, ColorPicker colorPicker, Double pointx, Double pointy) {
 		this.preencher(gc, colorPicker);
-        rect.setX(pointx);
-        rect.setY(pointy);
+        quadrado.setX(pointx);
+        quadrado.setY(pointy);
 		
 	}
 	
 	public void ponto2(Double pointx, Double pointy, GraphicsContext gc) {
-        rect.setWidth(Math.abs((pointx - rect.getX())));
-        rect.setHeight(Math.abs((pointy - rect.getY())));
+        quadrado.setWidth(Math.abs((pointx - quadrado.getX())));
+        quadrado.setHeight(Math.abs((pointy - quadrado.getY())));
 
-        if (rect.getX() > pointx) {
-            rect.setX(pointx);
+        if (quadrado.getX() > pointx) {
+            quadrado.setX(pointx);
         }
-        if (rect.getY() > pointy) {
-            rect.setY(pointy);
+        if (quadrado.getY() > pointy) {
+            quadrado.setY(pointy);
         }
 
-        gc.fillRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
-        gc.strokeRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+        gc.fillRect(quadrado.getX(), quadrado.getY(), quadrado.getWidth(), quadrado.getHeight());
+        gc.strokeRect(quadrado.getX(), quadrado.getY(), quadrado.getWidth(), quadrado.getHeight());
 		
 	}
-	
-	
-
 }

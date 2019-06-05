@@ -6,30 +6,27 @@ import javafx.scene.shape.Circle;
 
 public class Circulo extends Desenhar implements Formas   {
 
-	Circle circ = new Circle();
+	Circle circulo = new Circle();
 	
 	public void ponto1(GraphicsContext gc, ColorPicker colorPicker, Double pointx, Double pointy) {
 		this.preencher(gc, colorPicker);
-        circ.setCenterX(pointx);
-        circ.setCenterY(pointy);
-		
+        circulo.setCenterX(pointx);
+        circulo.setCenterY(pointy);	
 	}
 	
 	public void ponto2(Double pointx, Double pointy, GraphicsContext gc) {
-        circ.setRadius((Math.abs(pointx - circ.getCenterX()) + Math.abs(pointy - circ.getCenterY())) / 2);
+        circulo.setRadius((Math.abs(pointx - circulo.getCenterX()) + Math.abs(pointy - circulo.getCenterY())) / 2);
 
-        circ.setRadius((Math.abs(pointx - circ.getCenterX()) + Math.abs(pointy - circ.getCenterY())) / 2);
+        circulo.setRadius((Math.abs(pointx - circulo.getCenterX()) + Math.abs(pointy - circulo.getCenterY())) / 2);
 
-        if (circ.getCenterX() > pointx) {
-            circ.setCenterX(pointx);
+        if (circulo.getCenterX() > pointx) {
+            circulo.setCenterX(pointx);
         }
-        if (circ.getCenterY() > pointy) {
-            circ.setCenterY(pointy);
+        if (circulo.getCenterY() > pointy) {
+            circulo.setCenterY(pointy);
         }
 
-        gc.fillOval(circ.getCenterX(), circ.getCenterY(), circ.getRadius(), circ.getRadius());
-        gc.strokeOval(circ.getCenterX(), circ.getCenterY(), circ.getRadius(), circ.getRadius());	
-		
+        gc.fillOval(circulo.getCenterX(), circulo.getCenterY(), circulo.getRadius(), circulo.getRadius());
+        gc.strokeOval(circulo.getCenterX(), circulo.getCenterY(), circulo.getRadius(), circulo.getRadius());	
 	}
-
 }

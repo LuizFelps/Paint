@@ -13,8 +13,10 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
+import javafx.scene.image.WritableImage;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
@@ -25,6 +27,7 @@ import desenho.Linha;
 import desenho.Quadrado;
 import desenho.Texto;
 
+import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -33,6 +36,9 @@ public class PaintController {
     private static Stage stage;
 
     private Button activeButton;
+    
+    @FXML
+    private StackPane imageScreen;
 
     @FXML
     private Canvas canvas;
@@ -146,11 +152,15 @@ public class PaintController {
     @FXML
     private void saveImage() {
         FileChooser fc = new FileChooser();
-        fc.setTitle("Salvar imagem");
+        fc.setTitle("Salvar Imagem");
+        fc.getExtensionFilters().addAll(new ExtensionFilter("*.jpg", "*.jpg"), new ExtensionFilter("*.png", "*.png"));
         File file = fc.showSaveDialog(stage);
         if (file != null) {
+            WritableImage wi = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
+            imageScreen.snapshot(null, wi);
+            RenderedImage ri = SwingFXUtils.fromFXImage(wi, null);
             try {
-                ImageIO.write(SwingFXUtils.fromFXImage(imageView.getImage(), null), "png", file);
+                ImageIO.write(ri, "png", file);
             } catch (IOException e) {
                 System.out.println("Nao foi possivel salvar a imagem!");
             }
@@ -194,29 +204,29 @@ public class PaintController {
 
         canvas.setOnMousePressed(e -> {
             if (this.activeButton == rectangle) {
-            	quadrado.ponto1(gc, colorPicker, e.getX(), e.getY());
+                quadrado.ponto1(gc, colorPicker, e.getX(), e.getY());
 
             } else if (this.activeButton == circle) {
-            	circulo.ponto1(gc, colorPicker, e.getX(), e.getY());
+                circulo.ponto1(gc, colorPicker, e.getX(), e.getY());
 
             } else if (this.activeButton == text) {
-            	texto.escrever(gc, lineThickness, textField, colorPicker, e.getX(), e.getY());
+                texto.escrever(gc, lineThickness, textField, colorPicker, e.getX(), e.getY());
 
             } else if (this.activeButton == line) {
-            	linha.ponto1(gc, colorPicker, e.getX(), e.getY());
-            	
+                linha.ponto1(gc, colorPicker, e.getX(), e.getY());
+                
             }
         });
 
         canvas.setOnMouseReleased(e -> {
             if (this.activeButton == rectangle) {
-            	quadrado.ponto2(e.getX(), e.getY(), gc);
+                quadrado.ponto2(e.getX(), e.getY(), gc);
 
             } else if (this.activeButton == circle) {
-               	circulo.ponto2(e.getX(), e.getY(), gc);
+                circulo.ponto2(e.getX(), e.getY(), gc);
             } else if (this.activeButton == line) {
-            	linha.ponto2(e.getX(), e.getY(), gc);
-            	
+                linha.ponto2(e.getX(), e.getY(), gc);
+                
             }
         });
     }

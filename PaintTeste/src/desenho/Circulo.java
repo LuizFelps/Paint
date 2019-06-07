@@ -5,6 +5,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.shape.Circle;
 
 public class Circulo extends Desenhar implements Formas   {
+	
 
 	Circle circulo = new Circle();
 	

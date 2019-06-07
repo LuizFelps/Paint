@@ -35,7 +35,7 @@
         </MenuBar>
     </top>
     <center>
-        <StackPane BorderPane.alignment="CENTER">
+        <StackPane fx:id="imageScreen" BorderPane.alignment="CENTER">
             <children>
                 <ImageView fx:id="imageView" fitHeight="531.0" fitWidth="1100.0" pickOnBounds="true" preserveRatio="true" />
                 <Canvas fx:id="canvas" height="531.0" width="1100.0" />
@@ -105,6 +105,15 @@
                      </image>
                   </ImageView>
                </graphic></Button>
+                           <Button fx:id="fill" mnemonicParsing="false" onAction="#setFillButtonAsActive">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="imagens/fill.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
                 <Button fx:id="undo" mnemonicParsing="false" onAction="#unDo">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
